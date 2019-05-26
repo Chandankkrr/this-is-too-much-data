@@ -13,7 +13,10 @@
     "react-scripts": "0.9.x",
     "typescript": "3.4.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mime": ">=1.4.1",
+    "webpack-dev-server": ">=3.1.11"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
