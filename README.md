@@ -14,4 +14,4 @@ Mapping Google's location history data using Mapbox
   >npm run start
 
 - Navigate to `http://localhost:3000/` to access the running application
-- Click on `Choose a file` button and upload a json file with location location data
+- Click on `Choose a file` button and upload a json file with location data in it
