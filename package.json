@@ -7,6 +7,7 @@
     "@types/node": "12.0.2",
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
+    "gh-pages": "^2.0.1",
     "mapbox-gl": "^0.54.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -21,6 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "homepage": "https://chandankkrr.github.io/this-is-too-much-data"
 }
