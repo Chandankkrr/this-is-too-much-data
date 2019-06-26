@@ -16,7 +16,7 @@
 }
 
 .mapContainer{
-  top: 200px !important;
+  top: 215px !important;
   margin: 0 10%;
   border-radius: 15px;
 }
@@ -30,7 +30,7 @@
 	z-index: -1;
 }
 
-.inputfile + label {
+ .inputfile + label {
     font-size: 1.25em;
     color: white;
     background-color: #5ed2f2;
@@ -39,7 +39,24 @@
     margin-top: 10px;
     border-radius: 5%;
     cursor: pointer;
+    height: 40px;
 }
+
+ .progressBar{
+    background-color: chartreuse;
+    height: 5px;
+}
+
+ .uploadContainer{
+  float: left;
+}
+
+ .progressContainer{
+  display: inline-block;
+  margin-left: 15px;
+  width: 50px;
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

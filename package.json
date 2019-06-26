@@ -12,6 +12,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "0.9.x",
+    "react-circular-progressbar": "^2.0.0",
     "typescript": "3.4.5"
   },
   "devDependencies": {

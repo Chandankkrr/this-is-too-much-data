@@ -3,39 +3,47 @@ import logo from "./logo.svg";
 import "./App.css";
 import mapboxgl from "mapbox-gl";
 import data from "./data.location.json";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 mapboxgl.accessToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
 
 class App extends React.Component {
   map;
-  
+
   constructor(props) {
     super(props);
 
     this.state = {
-      locations: []
+      locations: [],
+      dataLoaded: false,
+      readProgress: 0
     };
   }
 
-  componentDidUpdate(){
-    this.updateMap();
+  componentDidUpdate() {
+    if (this.state.readProgress === 100 && this.state.dataLoaded) {
+      this.updateMap();
+    }
   }
 
   mapBoxFeatures = (data) => {
-    let features = data.locations.map(item => {
-      // Dividing lat and long by 1e7 due to an integer overflow error in location history data
-      var lngLat = [item.longitudeE7 / 1e7, item.latitudeE7 / 1e7];
-      var feature = {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: lngLat
-        }
-      };
-      return feature;
-    });
+    if (data && data.locations) {
+      let features = data.locations.map(item => {
+        // Dividing lat and long by 1e7 due to an integer overflow error in location history data
+        var lngLat = [item.longitudeE7 / 1e7, item.latitudeE7 / 1e7];
+        var feature = {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: lngLat
+          }
+        };
+        return feature;
+      });
 
-    return features;
+      return features;
+    }
   }
 
   updateMap() {
@@ -44,7 +52,7 @@ class App extends React.Component {
       type: "FeatureCollection",
       features: mapboxFeatures
     });
-    this.map.setCenter([80,10]);
+    this.map.setCenter([80, 10]);
     this.map.setZoom(2);
   }
 
@@ -162,6 +170,7 @@ class App extends React.Component {
     reader.readAsText(file, "UTF-8");
 
     reader.onload = this.loaded;
+    reader.onprogress = this.updateProgress;
     reader.onerror = this.errorHandler;
   };
 
@@ -170,10 +179,19 @@ class App extends React.Component {
     var fileString = evt.target.result;
 
     this.setState({
-      locations: JSON.parse(fileString)
+      locations: JSON.parse(fileString),
+      dataLoaded: true
     });
-
   };
+
+  updateProgress = evt => {
+    // evt is an ProgressEvent.
+    if (evt.lengthComputable) {
+      var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+      // Increase the progress bar length.
+      this.setState({ readProgress: percentLoaded });
+    }
+  }
 
   errorHandler = evt => {
     if (evt.target.error.name === "NotReadableError") {
@@ -190,15 +208,28 @@ class App extends React.Component {
           <h1>
             Google Location History Data Mapping using MapBox and React
           </h1>
-          <input
-            type="file"
-            name="file"
-            id="file"
-            className="inputfile"
-            accept=".json"
-            onChange={this.onChangeHandler}
-          />
-          <label htmlFor="file">Choose a file</label>
+          <div>
+            <input
+              type="file"
+              name="file"
+              id="file"
+              className="inputfile"
+              accept=".json"
+              onChange={this.onChangeHandler}
+            />
+            <label htmlFor="file">
+              Choose a file
+          </label>
+            {this.state.readProgress > 0 && (
+              <div className="progressContainer">
+                <CircularProgressbar
+                  value={this.state.readProgress}
+                  text={`${this.state.readProgress}%`}
+                />
+              </div>
+            )
+            }
+          </div>
         </header>
         <div
           ref={el => (this.mapContainer = el)}
