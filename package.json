@@ -8,10 +8,10 @@
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
     "gh-pages": "^2.0.1",
-    "mapbox-gl": "^0.54.0",
+    "mapbox-gl": "^2.13.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "0.9.x",
+    "react-scripts": "5.0.x",
     "react-circular-progressbar": "^2.0.0",
     "typescript": "3.4.5"
   },
